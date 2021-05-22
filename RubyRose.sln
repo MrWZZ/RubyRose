@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1022
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenLib", "ScreenLib\ScreenLib\ScreenLib.csproj", "{C56608C4-6CDE-45FF-BE2B-D29707D0398B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenLib", "ScreenLib\ScreenLib.csproj", "{C56608C4-6CDE-45FF-BE2B-D29707D0398B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HookLib", "HookLib\HookLib.csproj", "{984412B8-B758-4062-B78C-A91E65BFB579}"
 EndProject

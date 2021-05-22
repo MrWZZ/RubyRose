@@ -112,7 +112,7 @@
       <Project>{984412b8-b758-4062-b78c-a91e65bfb579}</Project>
       <Name>HookLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ScreenLib\ScreenLib\ScreenLib.csproj">
+    <ProjectReference Include="..\ScreenLib\ScreenLib.csproj">
       <Project>{c56608c4-6cde-45ff-be2b-d29707d0398b}</Project>
       <Name>ScreenLib</Name>
     </ProjectReference>
