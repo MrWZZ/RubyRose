@@ -1,0 +1,138 @@
+﻿<Window x:Class="CmdLike.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CmdLike"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        Title="设置" Height="600" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            
+            <!--用来给列表item提供宽度-->
+            <Grid x:Name="listItemWidth" Grid.Row="0" Grid.Column="0" Margin="10,0" Visibility="Hidden"/>
+
+            <TabControl SelectionChanged="TabControl_SelectionChanged">
+
+                <!--热键-->
+                <TabItem x:Name="hotkeyTab" Height="30" Width="80" Header="热键">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <ListView x:Name="hotkeyList" Grid.Row="0">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Gray" BorderThickness="1">
+                                        <Grid Height="35">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBox Name="hotkeyTb" Grid.Column="0" Text="{Binding KeyBinding, Mode=OneTime}" IsReadOnly="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDoubleClick="Hotkey_MouseDown" MouseLeave="Hotkey_MouseLeave" LostFocus="TextBox_LostFocus"></TextBox>
+                                            <Label Grid.Column="1" Content="{Binding DescriptionBinding, Mode=OneTime}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></Label>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <Button x:Name="hotkeyApply" Grid.Row="1" Content="应用热键" Margin="5" Width="150" Click="HotkeyApply_Click"></Button>
+                    </Grid>
+                </TabItem>
+
+                <!--快捷路径页签-->
+                <TabItem x:Name="cmdTab" Height="30" Width="80" Header="快捷路径">
+                    <Grid AllowDrop="True" Drop="Grid_Drop">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <ListView x:Name="cmdList" Grid.Row="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Gray" BorderThickness="1" Width="{Binding ActualWidth, ElementName=listItemWidth, Mode=OneWay}">
+                                        <Grid Height="35">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="cmdTitle" Width="200"></ColumnDefinition>
+                                                <ColumnDefinition Name="cmdDes"></ColumnDefinition>
+                                                <ColumnDefinition Name="cmdOperate" Width="100"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBox Grid.Column="0" Text="{Binding KeyBinding, Mode=OneTime}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextChanged="CustomTextBox_TextChanged"></TextBox>
+                                            <TextBox Grid.Column="1" Text="{Binding DescriptionBinding, Mode=OneTime}" IsReadOnly="True" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderThickness="0"></TextBox>
+                                            <Button Grid.Column="2" Content="删除" Click="CmdDelete_Click"></Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button x:Name="cmdApply" Grid.Row="1" Content="应用命令" Margin="5" Width="150" Click="CmdApply_Click"></Button>
+                    </Grid>
+                </TabItem>
+
+                <!--预制命令-->
+                <TabItem x:Name="systemTab" Height="30" Width="80" Header="预制命令">
+                    <ListView x:Name="systemList">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="1" Width="{Binding ActualWidth, ElementName=listItemWidth, Mode=OneTime}">
+                                    <Grid Height="35">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition x:Name="cmdTitle" Width="200"></ColumnDefinition>
+                                            <ColumnDefinition Name="cmdDes"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox Grid.Column="0" Text="{Binding KeyBinding, Mode=OneTime}" IsReadOnly="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+                                        <TextBox Grid.Column="1" Text="{Binding DescriptionBinding, Mode=OneTime}" IsReadOnly="True" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderThickness="0"></TextBox>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem>
+
+                <!--设置页签-->
+                <TabItem x:Name="settingTab" Height="30" Width="80" Header="设置">
+                    <StackPanel>
+                        
+                        <!--开机启动-->
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <CheckBox x:Name="openCheck" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <Label Content="开机启动" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Border BorderBrush="Black" BorderThickness="0,1,0,0"></Border>
+            <TextBox x:Name="tip" TextWrapping="Wrap" IsReadOnly="True" FontSize="13" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        </Grid>
+        
+    </Grid>
+</Window>
