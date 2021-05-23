@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Topmost="True"
         WindowStyle="None"
+        ShowInTaskbar="False"
         AllowsTransparency="True"
         Background="#B21A2123" 
         ResizeMode="NoResize"
