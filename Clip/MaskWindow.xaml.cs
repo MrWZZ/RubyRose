@@ -3,12 +3,12 @@
 namespace Clip
 {
     /// <summary>
-    /// ScreenWindow.xaml 的交互逻辑
+    /// MaskWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ScreenWindow : Window
+    public partial class MaskWindow : Window
     {
         private int borderThick = 2;
-        public ScreenWindow()
+        public MaskWindow()
         {
             InitializeComponent();
         }
@@ -147,7 +147,7 @@ namespace Clip
             }
         }
 
-        private void Reset()
+        public void Reset()
         {
             topMask.Height = Height / 2;
             bottomMask.Height = Height / 2;

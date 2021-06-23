@@ -9,17 +9,17 @@
         WindowState="Normal"
         ShowInTaskbar="False"
         ResizeMode="NoResize"
-        KeyDown="Window_KeyDown"
         MouseDoubleClick="Window_MouseDoubleClick"
-        MouseRightButtonDown="Window_MouseRightButtonDown"
+        PreviewMouseRightButtonDown="Window_MouseRightButtonDown"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Topmost="True"
         Title="ClipWindow">
 
-    <Grid>
+    <Grid x:Name="body">
         <Canvas x:Name="canvas" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Image x:Name="background"></Image>
         </Canvas>
         <Border x:Name="border" BorderBrush="LightGreen"></Border>
+        <InkCanvas x:Name="ink" Background="Transparent"></InkCanvas>
     </Grid>
 </Window>

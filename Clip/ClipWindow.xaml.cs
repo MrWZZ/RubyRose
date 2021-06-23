@@ -1,6 +1,9 @@
 ﻿using ScreenLib;
+using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Clip
 {
@@ -14,9 +17,30 @@ namespace Clip
         int winWidth = 0;
         int winHeight = 0;
 
+        InkCanv inkWin;
+
         public ClipWindow()
         {
             InitializeComponent();
+
+            ink.IsHitTestVisible = false;
+            inkWin = new InkCanv();
+            inkWin.Init(this);
+
+            CompositionTarget.Rendering += new EventHandler(WindowPositionChange);
+
+            Closed += ClipWindow_Closed;
+        }
+
+        private void ClipWindow_Closed(object sender, EventArgs e)
+        {
+            inkWin.Close();
+        }
+
+        //位置发生变化
+        void WindowPositionChange(object sender, EventArgs e)
+        {
+            SetInkPos();
         }
 
         public void SetPos(int x, int y, int width, int height)
@@ -34,23 +58,29 @@ namespace Clip
             canvas.Margin = new Thickness(borderThick);
 
             border.BorderThickness = new Thickness(borderThick);
+            SetInkPos();
+            inkWin.Show();
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void SetInkPos()
         {
-            if (e.Key == System.Windows.Input.Key.Escape)
-            {
-                Close();
-            }
+            inkWin.SetPos(Left, Top + Height);
         }
 
         private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (e.LeftButton != MouseButtonState.Pressed) return;
             SmallerWindow();
         }
 
         private void Window_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (ink.IsHitTestVisible)
+            {
+                ink.IsHitTestVisible = false;
+                return;
+            }
+                
             ClipImageToClipboard();
         }
 
@@ -75,11 +105,15 @@ namespace Clip
             {
                 Width = winWidth;
                 Height = winHeight;
+                inkWin.Show();
             }
             else
             {
                 Width = 100;
                 Height = 100;
+
+                ink.IsHitTestVisible = false;
+                inkWin.Hide();
             }
 
             isMinShow = !isMinShow;

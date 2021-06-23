@@ -65,6 +65,9 @@
     <Compile Include="ClipWindow.xaml.cs">
       <DependentUpon>ClipWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InkCanv.xaml.cs">
+      <DependentUpon>InkCanv.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MaskWindow.xaml.cs">
       <DependentUpon>MaskWindow.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="InkCanv.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MaskWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -27,7 +27,7 @@ namespace Clip
         public bool isClick;
         public System.Drawing.Point startPoint;
 
-        List<ScreenWindow> screenWindowList = new List<ScreenWindow>();
+        List<MaskWindow> maskWindowList = new List<MaskWindow>();
         List<ClipWindow> clipWindowList = new List<ClipWindow>();
 
         #region 页面遮罩
@@ -36,28 +36,28 @@ namespace Clip
         {
             foreach (var screen in System.Windows.Forms.Screen.AllScreens)
             {
-                var screenWindow = new ScreenWindow();
+                var screenWindow = new MaskWindow();
                 var bitmapSource = ScreenTool.Instance.GetBitmapSourceFromScreen(screen);
                 screenWindow.background_image.Source = bitmapSource;
                 screenWindow.SetPos(screen);
                 screenWindow.Show();
-                screenWindowList.Add(screenWindow);
+                maskWindowList.Add(screenWindow);
             }
         }
 
         public void CloseMaskScreen()
         {
-            foreach (var screen in screenWindowList)
+            foreach (var screen in maskWindowList)
             {
                 screen.Close();
             }
-            screenWindowList.Clear();
+            maskWindowList.Clear();
         }
 
         public void UpdateMouseMove()
         {
-            var enterList = new List<ScreenWindow>();
-            foreach (var item in screenWindowList)
+            var enterList = new List<MaskWindow>();
+            foreach (var item in maskWindowList)
             {
                 if (IsInScreen(item))
                 {
@@ -107,6 +107,8 @@ namespace Clip
                 return;
             }
 
+            ResetMaskWindow();
+
             var source = ScreenTool.Instance.GetBitmapSourceFromScreen(minX, minY, width, height);
 
             var clipWin = new ClipWindow();
@@ -136,13 +138,21 @@ namespace Clip
 
         #endregion
 
+        void ResetMaskWindow()
+        {
+            foreach (var item in maskWindowList)
+            {
+                item.Reset();
+            }
+        }
+
         void Clear()
         {
-            foreach (var item in screenWindowList)
+            foreach (var item in maskWindowList)
             {
                 item.Close();
             }
-            screenWindowList.Clear();
+            maskWindowList.Clear();
             foreach (var item in clipWindowList)
             {
                 item.Close();
