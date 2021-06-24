@@ -24,6 +24,9 @@ namespace Clip
 
         #endregion
 
+        public const int BIG_BORDER_TH = 3;
+        public const int SMALL_BORDER_TH = 1;
+
         public bool isClick;
         public System.Drawing.Point startPoint;
 
@@ -138,7 +141,7 @@ namespace Clip
 
         #endregion
 
-        void ResetMaskWindow()
+        public void ResetMaskWindow()
         {
             foreach (var item in maskWindowList)
             {

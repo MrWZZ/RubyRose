@@ -13,9 +13,11 @@ namespace Clip
     public partial class ClipWindow : Window
     {
         bool isMinShow = false;
-        int borderThick = 3;
         int winWidth = 0;
         int winHeight = 0;
+
+        const double MIN_WIDTH = 100;
+        const double MIN_HEIGHT = 100;
 
         InkCanv inkWin;
 
@@ -45,26 +47,28 @@ namespace Clip
 
         public void SetPos(int x, int y, int width, int height)
         {
-            Left = x - borderThick;
-            Top = y - borderThick;
+            Left = x - ClipTool.SMALL_BORDER_TH;
+            Top = y - ClipTool.SMALL_BORDER_TH;
 
-            winWidth = width + borderThick * 2;
-            winHeight = height + borderThick * 2;
+            winWidth = width + ClipTool.SMALL_BORDER_TH * 2;
+            winHeight = height + ClipTool.SMALL_BORDER_TH * 2;
 
             Width = winWidth;
             Height = winHeight;
             canvas.Width = width;
             canvas.Height = height;
-            canvas.Margin = new Thickness(borderThick);
+            canvas.Margin = new Thickness(ClipTool.SMALL_BORDER_TH);
 
-            border.BorderThickness = new Thickness(borderThick);
+            border.BorderThickness = new Thickness(ClipTool.SMALL_BORDER_TH);
             SetInkPos();
+
             inkWin.Show();
+            inkWin.AutoCheckVisible(Width);
         }
 
         private void SetInkPos()
         {
-            inkWin.SetPos(Left, Top + Height);
+            inkWin.SetPos(Left + Width, Top + Height);
         }
 
         private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -89,10 +93,10 @@ namespace Clip
             if (!isMinShow)
             {
                 var source = ScreenTool.Instance.GetBitmapSourceFromScreen(
-                    (int)Left + borderThick,
-                    (int)Top + borderThick,
-                    (int)Width - borderThick * 2,
-                    (int)Height - borderThick * 2);
+                    (int)Left + ClipTool.SMALL_BORDER_TH,
+                    (int)Top + ClipTool.SMALL_BORDER_TH,
+                    (int)Width - ClipTool.SMALL_BORDER_TH * 2,
+                    (int)Height - ClipTool.SMALL_BORDER_TH * 2);
 
                 Clipboard.SetImage(source);
                 ClipTool.Instance.CloseClipScreen(this);
@@ -105,13 +109,25 @@ namespace Clip
             {
                 Width = winWidth;
                 Height = winHeight;
+
+                border.BorderThickness = new Thickness(ClipTool.SMALL_BORDER_TH);
+
                 inkWin.Show();
             }
             else
             {
-                Width = 100;
-                Height = 100;
+                if (Width < MIN_WIDTH && Height < MIN_HEIGHT)
+                    return;
 
+                border.BorderThickness = new Thickness(ClipTool.BIG_BORDER_TH);
+
+                var minW = Math.Min(Width, MIN_WIDTH);
+                var minH = Math.Min(Height, MIN_HEIGHT);
+
+                Width = minW;
+                Height = minH;
+
+                inkWin.VisiblePanel(false);
                 ink.IsHitTestVisible = false;
                 inkWin.Hide();
             }

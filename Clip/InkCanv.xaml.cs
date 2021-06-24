@@ -48,7 +48,7 @@ namespace Clip
 
         public void SetPos(double x, double y)
         {
-            Left = x;
+            Left = x - Width;
             Top = y;
         }
 
@@ -60,6 +60,7 @@ namespace Clip
 
         private void lineSelectBtn_Click(object sender, RoutedEventArgs e)
         {
+            ink.IsHitTestVisible = true;
             ink.EditingMode = InkCanvasEditingMode.Select;
         }
 
@@ -102,6 +103,30 @@ namespace Clip
             Red,
             Blue,
             Yellow
+        }
+
+        private void UnholdBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VisiblePanel(true);
+        }
+
+        private void HoldBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VisiblePanel(false);
+        }
+
+        public void AutoCheckVisible(double targetWidth)
+        {
+            VisiblePanel(Width < targetWidth);
+        }
+
+        public void VisiblePanel(bool isVisible)
+        {
+            var hideVisible = isVisible ? Visibility.Collapsed : Visibility.Visible;
+            var showVisible = isVisible ? Visibility.Visible : Visibility.Collapsed;
+
+            hidePanel.Visibility = hideVisible;
+            showPanel.Visibility = showVisible;
         }
     }
 }

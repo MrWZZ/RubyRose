@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace Clip
 {
@@ -7,7 +8,6 @@ namespace Clip
     /// </summary>
     public partial class MaskWindow : Window
     {
-        private int borderThick = 2;
         public MaskWindow()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace Clip
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ClipTool.Instance.isClick = true;
-            borderFrame.BorderThickness = new Thickness(borderThick);
+            borderFrame.BorderThickness = new Thickness(ClipTool.SMALL_BORDER_TH);
 
             ClipTool.Instance.startPoint = System.Windows.Forms.Cursor.Position;
 
@@ -101,7 +101,7 @@ namespace Clip
         {
             if(ClipTool.Instance.isClick)
             {
-                borderFrame.BorderThickness = new Thickness(borderThick);
+                borderFrame.BorderThickness = new Thickness(ClipTool.SMALL_BORDER_TH);
 
                 if (System.Windows.Forms.Cursor.Position.X < Left + Width / 2)
                 {

@@ -19,7 +19,14 @@
         <Canvas x:Name="canvas" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Image x:Name="background"></Image>
         </Canvas>
-        <Border x:Name="border" BorderBrush="LightGreen"></Border>
+        <Border x:Name="border">
+            <Border.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Lime" Offset="0"/>
+                    <GradientStop Color="Yellow" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+        </Border>
         <InkCanvas x:Name="ink" Background="Transparent"></InkCanvas>
     </Grid>
 </Window>

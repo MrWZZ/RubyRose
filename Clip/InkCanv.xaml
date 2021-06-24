@@ -11,13 +11,20 @@
         Topmost="True"
         AllowsTransparency="True"
         Background="Transparent"
-        Title="InkCanv" Height="20" Width="230">
-    <StackPanel Orientation="Horizontal">
-        <Button x:Name="xBtn" Width="20" Content="X" Click="xBtn_Click"></Button>
-        <Button x:Name="lineBtn" Width="40" Content="Line" Click="lineBtn_Click"></Button>
-        <ComboBox Name="lineSizeCb" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectionChanged="lineSizeCb_Selected"></ComboBox>
-        <Button x:Name="lineSelectBtn" Width="40" Content="select" Click="lineSelectBtn_Click"></Button>
-        <Button x:Name="lineClearBtn" Width="40" Content="clear" Click="lineClearBtn_Click"></Button>
-        <ComboBox Name="lineColorCb" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectionChanged="lineColorCb_Selected"></ComboBox>
+        Title="InkCanv" Height="15" Width="250">
+    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+        <StackPanel Name="hidePanel" Orientation="Horizontal" FlowDirection="RightToLeft" Visibility="Collapsed">
+            <Button x:Name="unholdBtn" Width="20" Height="10" VerticalAlignment="Top" FontSize="6" Content="---" Click="UnholdBtn_Click"/>
+        </StackPanel>
+        <StackPanel Name="showPanel" Orientation="Horizontal" FlowDirection="RightToLeft" Visibility="Visible">
+            <Button x:Name="holdBtn" Width="20" Content="^" Click="HoldBtn_Click"></Button>
+            <Button x:Name="lineBtn" Width="40" Content="Line" Click="lineBtn_Click" FontSize="8"></Button>
+            <ComboBox Name="lineSizeCb" Width="40" HorizontalContentAlignment="Center" FontSize="8" VerticalContentAlignment="Center" SelectionChanged="lineSizeCb_Selected"></ComboBox>
+            <Button x:Name="lineSelectBtn" Width="40" Content="select" Click="lineSelectBtn_Click" FontSize="8"></Button>
+            <Button x:Name="lineClearBtn" Width="40" Content="clear" Click="lineClearBtn_Click" FontSize="8"></Button>
+            <ComboBox Name="lineColorCb" Width="50" HorizontalContentAlignment="Center" FontSize="8" VerticalContentAlignment="Center" SelectionChanged="lineColorCb_Selected"></ComboBox>
+            <Button x:Name="xBtn" Width="20" Content="X" Click="xBtn_Click" FontSize="9"></Button>
+        </StackPanel>
+
     </StackPanel>
 </Window>
