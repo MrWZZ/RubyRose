@@ -23,8 +23,9 @@ namespace Clip
         InkCanvas ink;
         ClipWindow win;
         System.Windows.Ink.DrawingAttributes inkAttr;
-        List<float> lineSizes = new List<float>() { 3, 4, 6, 9, 15 };
-        List<LineColor> lineColors = new List<LineColor>() { LineColor.Red, LineColor.Blue, LineColor.Yellow };
+        List<float> lineSizes = new List<float>() { 3, 4, 6, 9, 15, 20, 25 };
+        List<float> lineAlphas = new List<float>() { 0.2f, 0.4f, 0.6f, 0.8f, 1f };
+        List<LineColor> lineColors = new List<LineColor>() { LineColor.Red, LineColor.Green, LineColor.Blue, LineColor.Yellow };
 
         public InkCanv()
         {
@@ -40,10 +41,12 @@ namespace Clip
             inkAttr = ink.DefaultDrawingAttributes;
 
             lineSizeCb.ItemsSource = lineSizes;
-            lineSizeCb.SelectedIndex = 0;
-
+            lineAlphaCb.ItemsSource = lineAlphas;
             lineColorCb.ItemsSource = lineColors;
+
+            lineSizeCb.SelectedIndex = 2;
             lineColorCb.SelectedIndex = 0;
+            lineAlphaCb.SelectedIndex = 2;
         }
 
         public void SetPos(double x, double y)
@@ -76,11 +79,21 @@ namespace Clip
 
         public void lineColorCb_Selected(object sender, RoutedEventArgs e)
         {
-            var index = lineColorCb.SelectedIndex;
-            switch (lineColors[index])
+            ChangeColor();
+        }
+
+        private void ChangeColor()
+        {
+            if (lineColorCb.SelectedIndex < 0 || lineAlphaCb.SelectedIndex < 0)
+                return;
+
+            switch (lineColors[lineColorCb.SelectedIndex])
             {
                 case LineColor.Red:
                     inkAttr.Color = Colors.Red;
+                    break;
+                case LineColor.Green:
+                    inkAttr.Color = Colors.Green;
                     break;
                 case LineColor.Blue:
                     inkAttr.Color = Colors.Blue;
@@ -89,6 +102,10 @@ namespace Clip
                     inkAttr.Color = Colors.Yellow;
                     break;
             }
+
+            var alphaC = inkAttr.Color;
+            alphaC.A = (byte)(255 * lineAlphas[lineAlphaCb.SelectedIndex]);
+            inkAttr.Color = alphaC;
         }
 
         public void lineSizeCb_Selected(object sender, RoutedEventArgs e)
@@ -101,6 +118,7 @@ namespace Clip
         public enum LineColor
         {
             Red,
+            Green,
             Blue,
             Yellow
         }
@@ -127,6 +145,11 @@ namespace Clip
 
             hidePanel.Visibility = hideVisible;
             showPanel.Visibility = showVisible;
+        }
+
+        private void LineAlphaCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChangeColor();
         }
     }
 }
