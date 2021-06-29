@@ -26,6 +26,8 @@ namespace Clip
 
         public const int BIG_BORDER_TH = 3;
         public const int SMALL_BORDER_TH = 1;
+        public const double MIN_WIDTH = 100;
+        public const double MIN_HEIGHT = 100;
 
         public bool isClick;
         public System.Drawing.Point startPoint;
@@ -105,8 +107,9 @@ namespace Clip
             var width = maxX - minX;
             var height = maxY - minY;
 
-            if(width <= 0 || height <= 0)
+            if(width <= 0 || height <= 0 || (width < MIN_WIDTH && height < MIN_HEIGHT))
             {
+                CloseMaskScreen();
                 return;
             }
 

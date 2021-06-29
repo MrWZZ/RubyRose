@@ -16,9 +16,6 @@ namespace Clip
         int winWidth = 0;
         int winHeight = 0;
 
-        const double MIN_WIDTH = 100;
-        const double MIN_HEIGHT = 100;
-
         InkCanv inkWin;
 
         public ClipWindow()
@@ -116,13 +113,13 @@ namespace Clip
             }
             else
             {
-                if (Width < MIN_WIDTH && Height < MIN_HEIGHT)
+                if (Width < ClipTool.MIN_WIDTH && Height < ClipTool.MIN_HEIGHT)
                     return;
 
                 border.BorderThickness = new Thickness(ClipTool.BIG_BORDER_TH);
 
-                var minW = Math.Min(Width, MIN_WIDTH);
-                var minH = Math.Min(Height, MIN_HEIGHT);
+                var minW = Math.Min(Width, ClipTool.MIN_WIDTH);
+                var minH = Math.Min(Height, ClipTool.MIN_HEIGHT);
 
                 Width = minW;
                 Height = minH;
